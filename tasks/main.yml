@@ -1,0 +1,28 @@
+---
+
+- name: add dotdeb key
+  apt_key: id=89DF5277 url=http://www.dotdeb.org/dotdeb.gpg state=present
+
+- name: add dotdeb repository php55
+  apt_repository: repo='deb http://packages.dotdeb.org {{ ansible_distribution_release }}-php{{ php-fpm.version }} all' state=present update_cache=no
+
+- name: add dotdeb source repository php55
+  apt_repository: repo='deb-src http://packages.dotdeb.org {{ ansible_distribution_release }}-php{{ php-fpm.version }} all' state=present update_cache=yes
+
+- name: Install PHP
+  apt: name={{ item }} state=present
+  with_items:
+   - php5
+   - php5-fpm
+
+- name: Install PHP module
+  apt: name={{ item }} state=present
+  with_items: php-fpm.modules
+
+#- shell: composer --version
+#  register: composer_version
+#  ignore_errors: True
+#  no_log: True
+#
+#- include: composer.yml
+#  when: composer_version|failed
