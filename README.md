@@ -17,7 +17,7 @@ Configuration
 -------------
 
 ```yaml
-php-fpm:
+php_fpm:
   version: 55
   modules:
     - php5-cli
