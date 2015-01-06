@@ -18,11 +18,3 @@
 - name: Install PHP module
   apt: name={{ item }} state=present
   with_items: php_fpm.modules
-
-#- shell: composer --version
-#  register: composer_version
-#  ignore_errors: True
-#  no_log: True
-#
-#- include: composer.yml
-#  when: composer_version|failed
