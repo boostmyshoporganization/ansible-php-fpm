@@ -12,7 +12,6 @@
 - name: Install PHP
   apt: name={{ item }} state=present
   with_items:
-   - libapache2-mod-php5
    - php5
    - php5-fpm
 
