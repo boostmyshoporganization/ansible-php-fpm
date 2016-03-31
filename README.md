@@ -18,6 +18,9 @@ Configuration
 
 ```yaml
 php_fpm:
+  fpm:
+    upload_max_filesize: 2M
+  cli:
   version: 55
   modules:
     - php5-cli
