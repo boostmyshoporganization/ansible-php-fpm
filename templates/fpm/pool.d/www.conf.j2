@@ -8,11 +8,12 @@ listen.owner = www-data
 listen.group = www-data
 listen.mode = 0666
 
-pm = dynamic
+pm = {{ php_fpm.fpm.pm.type }}
 
-pm.max_children = 50
-pm.start_servers = 10
-pm.min_spare_servers = 10
-pm.max_spare_servers = 20
+pm.max_requests = {{ php_fpm.fpm.pm.max_requests }}
+pm.max_children = {{ php_fpm.fpm.pm.max_children }}
+pm.start_servers = {{ php_fpm.fpm.pm.start_servers }}
+pm.min_spare_servers = {{ php_fpm.fpm.pm.min_spare_servers }}
+pm.max_spare_servers = {{ php_fpm.fpm.pm.max_spare_servers }}
 
 chdir = /

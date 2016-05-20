@@ -3,6 +3,13 @@
 php_fpm:
   fpm:
     upload_max_filesize: 2M
+    pm:
+      type: dynamic
+      max_requests: 500
+      max_children: 50
+      start_servers: 10
+      min_spare_servers: 10
+      max_spare_servers: 20
   cli:
   version: 55
   modules:
