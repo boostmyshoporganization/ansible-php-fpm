@@ -1,0 +1,38 @@
+---
+
+- name: Install PHP
+  apt: name={{ item }} state=present
+  with_items:
+   - php7.0
+   - php7.0-fpm
+  tags: php-fpm
+
+- name: Install PHP module
+  apt: name={{ item }} state=present
+  with_items: php_fpm.modules
+  when: php_fpm.modules is defined
+  tags: php-fpm
+
+- name: Configure fpm/php.ini
+  template: src=fpm/php.ini.j2 dest=/etc/php/7.0/fpm/php.ini
+  notify: restart php-fpm70
+  tags: php-fpm
+
+- set_fact:
+    pool_path: /etc/php/7.0/fpm/pool.d/*.conf
+  tags: php-fpm
+
+- name: Configure fpm/php-fpm.conf
+  template: src=fpm/php-fpm.conf.j2 dest=/etc/php/7.0/fpm/php-fpm.conf
+  notify: restart php-fpm70
+  tags: php-fpm
+
+- name: Configure fpm/pool.d/www.conf
+  template: src=fpm/pool.d/www.conf.j2 dest=/etc/php/7.0/fpm/pool.d/www.conf
+  notify: restart php-fpm70
+  tags: php-fpm
+
+- name: Configure cli/php.ini
+  template: src=cli/php.ini.j2 dest=/etc/php/7.0/cli/php.ini
+  notify: restart php-fpm70
+  tags: php-fpm

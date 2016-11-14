@@ -2,27 +2,36 @@
 
 - name: add dotdeb key
   apt_key: id=89DF5277 url=http://www.dotdeb.org/dotdeb.gpg state=present
+  tags: php-fpm
 
 - name: add dotdeb repository php
   apt_repository: repo='deb http://packages.dotdeb.org {{ ansible_distribution_release }}-php{{ php_fpm.version }} all' state=present update_cache=no
+  tags: php-fpm
 
 - name: add dotdeb source repository php
   apt_repository: repo='deb-src http://packages.dotdeb.org {{ ansible_distribution_release }}-php{{ php_fpm.version }} all' state=present update_cache=yes
+  tags: php-fpm
 
 - name: Install PHP
   apt: name={{ item }} state=present
   with_items:
    - php5
    - php5-fpm
+   tags: php-fpm
 
 - name: Install PHP module
   apt: name={{ item }} state=present
   with_items: php_fpm.modules
   when: php_fpm.modules is defined
+  tags: php-fpm
 
 - name: Configure fpm/php.ini
   template: src=fpm/php.ini.j2 dest=/etc/php5/fpm/php.ini
   notify: restart php-fpm
+  tags: php-fpm
+
+- set_fact:
+    pool_path: /etc/php5/fpm/pool.d/*.conf
   tags: php-fpm
 
 - name: Configure fpm/php-fpm.conf

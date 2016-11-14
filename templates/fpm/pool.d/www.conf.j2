@@ -3,7 +3,7 @@
 user = www-data
 group = www-data
 
-listen = /var/run/php5-fpm.sock
+listen = /var/run/php{{ php_fpm.version }}-fpm.sock
 listen.owner = www-data
 listen.group = www-data
 listen.mode = 0666
